@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anonymous Haven · Recovery Technology for the People</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Literata:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a08;
+      --bg2: #111110;
+      --surface: #181816;
+      --border: #2a2a26;
+      --gold: #c9a84c;
+      --gold-dim: #8a6d2f;
+      --cream: #f0e6cc;
+      --cream-dim: #a89878;
+      --white: #f5f2eb;
+      --muted: #5a5750;
+      --green: #4a7c59;
+      --green-bright: #6aab7a;
+      --red: #8b3a3a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Literata', Georgia, serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,8,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--cream-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--cream-dim);
+      max-width: 580px;
+      margin-bottom: 3rem;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.6s forwards;
+    }
+
+    .hero-quote {
+      border-left: 2px solid var(--gold-dim);
+      padding-left: 1.5rem;
+      margin-bottom: 3.5rem;
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.8s forwards;
+    }
+
+    .hero-quote p {
+      font-style: italic;
+      color: var(--cream-dim);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .hero-quote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--gold);
+      color: var(--bg);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      border: 1px solid var(--border);
+      color: var(--cream-dim);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    /* Scroll indicator */
+    .scroll-line {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.5s forwards;
+    }
+
+    .scroll-line span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .scroll-line::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--gold-dim);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0 auto;
+    }
+
+    /* MISSION */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .mission-text p {
+      color: var(--cream-dim);
+      font-size: 1.05rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .mission-text p strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .mission-stat-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .stat-item {
+      border-left: 1px solid var(--border);
+      padding-left: 1.5rem;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* PLATFORM */
+    .platform-intro {
+      max-width: 640px;
+      color: var(--cream-dim);
+      font-size: 1.05rem;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .platform-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .platform-stack::before {
+      content: '';
+      position: absolute;
+      left: 1.75rem;
+      top: 2rem;
+      bottom: 2rem;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold-dim), var(--border), transparent);
+    }
+
+    .platform-item {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .platform-item:last-child { border-bottom: none; }
+
+    .platform-item:hover .platform-content {
+      transform: translateX(4px);
+    }
+
+    .platform-node {
+      width: 3.5rem;
+      height: 3.5rem;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      background: var(--bg2);
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+
+    .platform-content {
+      transition: transform 0.3s;
+    }
+
+    .platform-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .platform-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .platform-desc {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .platform-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* CREDENTIAL */
+    .credential-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .credential-section::before {
+      content: 'MANO';
+      position: absolute;
+      right: -1rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      font-weight: 900;
+      color: var(--border);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .credential-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .credential-text .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+    }
+
+    .credential-text p {
+      color: var(--cream-dim);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .credential-text .big-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .token-card {
+      background: var(--bg);
+      border: 1px solid var(--gold-dim);
+      padding: 2rem;
+    }
+
+    .token-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .token-symbol {
+      width: 3rem;
+      height: 3rem;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--bg);
+    }
+
+    .token-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .token-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .token-milestone {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .token-milestone:last-child { border-bottom: none; }
+
+    .milestone-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--cream-dim);
+      text-transform: uppercase;
+    }
+
+    .milestone-reward {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--green-bright);
+      letter-spacing: 0.05em;
+    }
+
+    .token-note {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(201, 168, 76, 0.05);
+      border-left: 2px solid var(--gold-dim);
+    }
+
+    .token-note p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* WHO */
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      margin-top: 3rem;
+    }
+
+    .who-item {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      transition: background 0.3s;
+    }
+
+    .who-item:hover { background: var(--surface); }
+
+    .who-icon {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .who-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .who-desc {
+      color: var(--cream-dim);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* FOUNDER */
+    .founder-section {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .founder-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: sticky;
+      top: 6rem;
+    }
+
+    .founder-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.25rem;
+    }
+
+    .founder-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .founder-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .founder-detail {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      padding-left: 1rem;
+      border-left: 1px solid var(--border);
+      line-height: 1.5;
+    }
+
+    .founder-story p {
+      color: var(--cream-dim);
+      font-size: 1.05rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.8;
+    }
+
+    .founder-story p strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .founder-story .pull-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: var(--gold);
+      line-height: 1.5;
+      margin: 2rem 0;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--gold-dim);
+    }
+
+    /* CONTACT */
+    .contact-section {
+      text-align: center;
+      padding: 6rem 2rem;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-section .section-label {
+      justify-content: center;
+    }
+
+    .contact-section .section-label::after { display: none; }
+    .contact-section .section-label::before {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 40px;
+      background: var(--gold-dim);
+    }
+
+    .contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .contact-sub {
+      color: var(--cream-dim);
+      font-style: italic;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-brand {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .footer-verse {
+      font-family: 'Literata', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem; }
+      .nav-links { display: none; }
+      .mission-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .credential-grid { grid-template-columns: 1fr; }
+      .credential-section { padding: 2rem; }
+      .credential-section::before { display: none; }
+      .who-grid { grid-template-columns: 1fr; }
+      .founder-section { grid-template-columns: 1fr; }
+      .founder-card { position: static; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .footer-verse { text-align: center; }
+      .platform-item { grid-template-columns: 3rem 1fr; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Anonymous Haven</a>
+    <ul class="nav-links">
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#credential">MANO</a></li>
+      <li><a href="#founder">Founder</a></li>
+      <li><a href="#contact">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div style="max-width:1100px; margin:0 auto; position:relative;">
+    <div class="hero">
+      <p class="hero-eyebrow">Anonymous Haven · El Paso, TX · Est. 2024</p>
+      <h1 class="hero-title">Recovery<br>Technology<br>for the <em>People.</em></h1>
+      <p class="hero-subtitle">Built from lived experience. Designed for the workers, the warriors, and the ones still finding their way back.</p>
+      <blockquote class="hero-quote">
+        <p>I started this work because I saw myself in the people I serve.<br>I started building because no one else was building it for us.</p>
+        <cite>— Andrés F. Chávez, Founder</cite>
+      </blockquote>
+      <div class="hero-cta">
+        <a href="#platform" class="btn-primary">See the Platform</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+      </div>
+      <div class="scroll-line"><span>Scroll</span></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MISSION -->
+  <section id="mission">
+    <p class="section-label reveal">Mission</p>
+    <div class="mission-grid">
+      <div class="mission-text reveal">
+        <h2 class="section-title">The system wasn't built<br>for <em>us.</em></h2>
+        <p>Recovery technology has always been designed for clinicians, administrators, and grant officers. The people actually doing the work — the peer specialists, the outreach workers, the people in recovery themselves — were an afterthought.</p>
+        <p><strong>Anonymous Haven is different.</strong> Every tool in this platform was designed by someone who has sat on both sides of the table. Who knows what a peer specialist needs in the middle of a session. Who knows what it feels like to need help and not know where to turn.</p>
+        <p>This is technology built from the ground up, for the ground level.</p>
+      </div>
+      <div class="mission-stat-block reveal">
+        <div class="stat-item">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Active tools in the ecosystem</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Years in recovery, building this</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">42 CFR</div>
+          <div class="stat-label">Part 2 compliance built in</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">136</div>
+          <div class="stat-label">Commits on Compassionate Log alone</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PLATFORM -->
+  <section id="platform">
+    <p class="section-label reveal">The Platform</p>
+    <h2 class="section-title reveal">One ecosystem.<br><em>Four layers.</em></h2>
+    <p class="platform-intro reveal">Anonymous Haven isn't one app. It's a full stack built for every person in the recovery ecosystem — from the individual in recovery to the organization behind them.</p>
+
+    <div class="platform-stack">
+
+      <div class="platform-item reveal">
+        <div class="platform-node">01</div>
+        <div class="platform-content">
+          <div class="platform-role">The Individual · Coming Soon</div>
+          <div class="platform-name">Anonymous Haven App</div>
+          <p class="platform-desc">Daily check-ins, peer support SOS, recovery education, and connection to services — all without requiring identity. The core tool. The front door. Where every journey starts.</p>
+          <div class="platform-tags">
+            <span class="tag">Daily Haven</span>
+            <span class="tag">SOS Button</span>
+            <span class="tag">Peer Access</span>
+            <span class="tag">MVP First — No AI Until Ready</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-item reveal">
+        <div class="platform-node">02</div>
+        <div class="platform-content">
+          <div class="platform-role">MI Training · Active Development</div>
+          <div class="platform-name">Zeke AI</div>
+          <p class="platform-desc">An AI-powered Motivational Interviewing trainer and peer support buddy — built to sharpen the skills of the peer specialist, not manage their caseload. OARS practice, evoking and eliciting techniques, peer support ethics, and policies & procedures. A quiet coach that helps peers make better decisions and show up stronger in every session.</p>
+          <div class="platform-tags">
+            <span class="tag">OARS Training</span>
+            <span class="tag">MI Skills</span>
+            <span class="tag">Peer Ethics</span>
+            <span class="tag">Support Buddy</span>
+          </div>
+          <div class="platform-tags">
+            <span class="tag">MI Assistant</span>
+            <span class="tag">GPRA/BARC</span>
+            <span class="tag">Note Support</span>
+            <span class="tag">HIPAA Aligned</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-item reveal">
+        <div class="platform-node">03</div>
+        <div class="platform-content">
+          <div class="platform-role">Peer Coordination · Active Development</div>
+          <div class="platform-name">L.O.G.</div>
+          <p class="platform-desc">AI-powered peer recovery organization management — SUPRT-C and BARC-10 assessments, recovery plans, participant tracking, and Amazon Nova integration. Built for the Amazon Nova Hackathon 2026.</p>
+          <div class="platform-tags">
+            <span class="tag">SUPRT-C</span>
+            <span class="tag">BARC-10</span>
+            <span class="tag">Amazon Bedrock</span>
+            <span class="tag">42 CFR Part 2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-item reveal">
+        <div class="platform-node">04</div>
+        <div class="platform-content">
+          <div class="platform-role">Field Operations · Most Complete</div>
+          <div class="platform-name">Compassionate Log</div>
+          <p class="platform-desc">Multi-organization overdose response and outreach tracking — Narcan distribution, incident logging, geographic analytics, team dashboards. Built for detox centers, outreach teams, and harm reduction orgs.</p>
+          <div class="platform-tags">
+            <span class="tag">Multi-Org</span>
+            <span class="tag">Narcan Tracking</span>
+            <span class="tag">HIPAA</span>
+            <span class="tag">Offline-First</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MANO TOKEN -->
+  <section id="credential" style="padding: 6rem 2rem;">
+    <div class="credential-section reveal">
+      <div class="credential-grid">
+        <div class="credential-text">
+          <p class="section-label">MANO Token · In Development</p>
+          <h2 class="section-title">What if your recovery<br>couldn't be <em>taken away?</em></h2>
+          <p>Right now, when someone completes treatment, gets discharged from probation, or reaches 30 days clean — that proof lives in a file somewhere. A bureaucrat's drawer. A system that can lose it, deny it, or disappear.</p>
+          <p>MANO changes that. A soulbound credential that belongs to the person who earned it. Non-transferable. Tamper-proof. Verified on-chain. No identity exposed.</p>
+          <p class="big-quote">"What if the work you did in recovery could follow you — not as a file in a bureaucrat's drawer, but as something you own. Something nobody can take away."</p>
+        </div>
+        <div>
+          <div class="token-card reveal">
+            <div class="token-header">
+              <div class="token-symbol">M</div>
+              <div>
+                <div class="token-name">MANO Token</div>
+                <div class="token-subtitle">Mi Alma Nunca Olvidó · Soulbound Credential</div>
+              </div>
+            </div>
+            <div class="token-milestone">
+              <span class="milestone-label">30 Days Clean</span>
+              <span class="milestone-reward">Employment Voucher</span>
+            </div>
+            <div class="token-milestone">
+              <span class="milestone-label">90 Days Clean</span>
+              <span class="milestone-reward">Housing Access Rights</span>
+            </div>
+            <div class="token-milestone">
+              <span class="milestone-label">Program Completion</span>
+              <span class="milestone-reward">Education Scholarship</span>
+            </div>
+            <div class="token-milestone">
+              <span class="milestone-label">2 Yrs + Probation Discharge</span>
+              <span class="milestone-reward">University Scholarship</span>
+            </div>
+            <div class="token-milestone">
+              <span class="milestone-label">Peer Support Certification</span>
+              <span class="milestone-reward">Platform Access + Recognition</span>
+            </div>
+            <div class="token-note">
+              <p>⬡ Soulbound — cannot be sold or transferred<br>⬡ Zero-knowledge proof — verifies without exposing identity<br>⬡ Polygon ID infrastructure · In development</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHO IT'S FOR -->
+  <section id="who">
+    <p class="section-label reveal">Designed For</p>
+    <h2 class="section-title reveal">Everyone the system<br>was built <em>around,</em> not for.</h2>
+    <div class="who-grid">
+      <div class="who-item reveal">
+        <div class="who-icon">01 · Individual</div>
+        <div class="who-title">People in Recovery</div>
+        <p class="who-desc">Daily check-ins, crisis support, education tools, and a credential that records your journey — privately, securely, and on your terms.</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-icon">02 · Peer Worker</div>
+        <div class="who-title">Peer Specialists & Coaches</div>
+        <p class="who-desc">Real-time MI coaching, GPRA/BARC tracking, and note support — so you can stay present with the person in front of you instead of drowning in admin.</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-icon">03 · Organization</div>
+        <div class="who-title">Recovery Orgs & Detox Centers</div>
+        <p class="who-desc">Outreach tracking, overdose response logging, multi-org data isolation, grant compliance dashboards — the operational infrastructure recovery orgs need.</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-icon">04 · Field</div>
+        <div class="who-title">Outreach & Harm Reduction Teams</div>
+        <p class="who-desc">Narcan distribution tracking, geographic analytics, team dashboards — built for the people working the streets, the shelters, and the drop-in centers.</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-icon">05 · Future</div>
+        <div class="who-title">Sober Homes & Treatment Programs</div>
+        <p class="who-desc">The platform is built to plug into sober living homes, MAT programs, faith-based recovery groups — anywhere peer support happens.</p>
+      </div>
+      <div class="who-item reveal">
+        <div class="who-icon">06 · System</div>
+        <div class="who-title">Justice-Involved Individuals</div>
+        <p class="who-desc">MANO credentials built specifically for reentry — verifiable proof of recovery milestones that travel with the person across probation, housing, employment, and education.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOUNDER -->
+  <section id="founder" style="padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;">
+    <p class="section-label reveal">The Builder</p>
+    <div class="founder-section">
+      <div class="founder-card reveal">
+        <div class="founder-name">Andrés F. Chávez</div>
+        <div class="founder-role">Founder · Anonymous Haven</div>
+        <div class="founder-details">
+          <div class="founder-detail">Peer Lead, Opioid Drop-In Center<br>Recovery Alliance El Paso</div>
+          <div class="founder-detail">Member, Technology Committee<br>Paseo del Norte ROSC</div>
+          <div class="founder-detail">3+ Years in Recovery</div>
+          <div class="founder-detail">Self-Taught Developer<br>React Native · TypeScript · Supabase · AWS</div>
+          <div class="founder-detail">El Paso, TX</div>
+        </div>
+      </div>
+      <div class="founder-story reveal">
+        <p>A year and a half ago, <strong>Andrés Chávez was computer illiterate.</strong> He learned to use AI just to help him type. Today he's built four production-grade recovery technology tools — HIPAA-compliant, 42 CFR Part 2-compliant, with multi-organization architecture, clinical assessment tools, and a blockchain credentialing system in development.</p>
+        <div class="pull-quote">"I used to be called a problem.<br>Now I build solutions."</div>
+        <p>He works as a Peer Lead at Recovery Alliance El Paso's opioid drop-in center during the day. He codes at night. He co-facilitates MAT and Celebrate Recovery meetings, hosts family support groups using a CRAFT-based curriculum, and shows up every weekend at a detox facility — because he sees himself in the people he serves.</p>
+        <p>Anonymous Haven isn't a startup built in a garage by someone who read about the opioid crisis. It's built from inside it. That's the difference.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <div class="contact-section" id="contact">
+    <p class="section-label reveal">Let's Build</p>
+    <h2 class="contact-title reveal">Ready to collaborate?</h2>
+    <p class="contact-sub reveal">Investors, recovery organizations, technologists, and fellow builders — the door is open.</p>
+    <div class="contact-links reveal">
+      <a href="https://github.com/AC1706-67" class="btn-primary" target="_blank">View GitHub</a>
+      <a href="https://twitter.com/AnonymousHavenX" class="btn-ghost" target="_blank">X / Twitter</a>
+      <a href="https://www.linkedin.com/in/andres-chavez-46a942320" class="btn-ghost" target="_blank">LinkedIn</a>
+      <a href="https://giveth.io/project/recovery-haven-app" class="btn-ghost" target="_blank">Support on Giveth</a>
+    </div>
+    <p style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase;">anonymoushaven.ai · El Paso, TX</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">© 2025 Anonymous Haven · All Rights Reserved</div>
+    <div class="footer-verse">"For I know the plans I have for you..." — Jeremiah 29:11</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
