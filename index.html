@@ -438,6 +438,29 @@
       text-transform: uppercase;
     }
 
+    /* WHAT'S NEXT */
+    .whats-next {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .whats-next-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .whats-next p {
+      color: var(--cream-dim);
+      font-size: 0.95rem;
+      max-width: 640px;
+      font-style: italic;
+    }
+
     /* CREDENTIAL */
     .credential-section {
       background: var(--surface);
@@ -863,28 +886,25 @@
 
   <div class="divider"></div>
 
-  <!-- MISSION — UPDATED -->
+  <!-- MISSION -->
   <section id="mission">
     <p class="section-label reveal">Mission</p>
     <div class="mission-grid">
       <div class="mission-text reveal">
-        <!-- CHANGE 1: New headline and body copy — forward-looking, not system-bashing -->
         <h2 class="section-title">Recovery is evolving.<br><em>Technology should too.</em></h2>
         <p>For decades, recovery has been driven by people — peer specialists, outreach workers, family members, and those walking the road themselves. Technology has been slow to catch up. That's changing.</p>
         <p><strong>Anonymous Haven builds tools designed by people who have lived on both sides of the story.</strong> Who know what a peer specialist needs in the middle of a session. Who know what it feels like to need help and not know where to turn. Every tool in this platform was built from inside the work — not from the outside looking in.</p>
         <p>This is technology built from the ground up, for the ground level — and built to demonstrate the impact that funders need to see.</p>
       </div>
       <div class="mission-stat-block reveal">
-        <!-- CHANGE 2: Accurate tool count + status clarity -->
         <div class="stat-item">
-          <div class="stat-number">4</div>
-          <div class="stat-label">Tools in the ecosystem · 1 live, 3 in development</div>
+          <div class="stat-number">2</div>
+          <div class="stat-label">Tools live, built start to finish</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">3+</div>
           <div class="stat-label">Years in recovery, building this</div>
         </div>
-        <!-- CHANGE 3: 42 CFR hyperlink -->
         <div class="stat-item">
           <div class="stat-number">42 CFR</div>
           <div class="stat-label">
@@ -908,22 +928,22 @@
   <!-- PLATFORM -->
   <section id="platform">
     <p class="section-label reveal">The Platform</p>
-    <h2 class="section-title reveal">One ecosystem.<br><em>Four layers.</em></h2>
-    <p class="platform-intro reveal">Anonymous Haven isn't one app. It's a full stack built for every person in the recovery ecosystem — from the individual in recovery to the organization behind them.</p>
+    <h2 class="section-title reveal">Two tools, live.<br><em>Built to grow.</em></h2>
+    <p class="platform-intro reveal">Anonymous Haven starts with two tools, built from inside the work — one for the people walking through the door, one for the people tracking what happens after. More is coming; this is what's real today.</p>
 
     <div class="platform-stack">
 
       <div class="platform-item reveal">
         <div class="platform-node">01</div>
         <div class="platform-content">
-          <div class="platform-role">The Individual · Coming Soon</div>
-          <div class="platform-name">Anonymous Haven App</div>
-          <p class="platform-desc">Daily check-ins, peer support SOS, recovery education, and connection to services — all without requiring identity. The core tool. The front door. Where every journey starts.</p>
+          <div class="platform-role">Participant Check-In · Launching Soon</div>
+          <div class="platform-name">Haven Check-In</div>
+          <p class="platform-desc">A privacy-preserving check-in system for the opioid drop-in center and Naloxone Hub network — built to serve roughly 15,000 contacts a year without ever recording a name. Card-based intake (HC- for participant check-ins, NX- for Naloxone Hub pickups) is fully built and wired end-to-end. Physical card issuance and on-site kiosk testing are the last steps before full pilot launch.</p>
           <div class="platform-tags">
-            <span class="tag">Daily Haven</span>
-            <span class="tag">SOS Button</span>
-            <span class="tag">Peer Access</span>
-            <span class="tag">MVP First — No AI Until Ready</span>
+            <span class="tag">Anonymous Intake</span>
+            <span class="tag">Naloxone Hub</span>
+            <span class="tag">Card-Based</span>
+            <span class="tag">42 CFR Part 2</span>
           </div>
         </div>
       </div>
@@ -931,48 +951,12 @@
       <div class="platform-item reveal">
         <div class="platform-node">02</div>
         <div class="platform-content">
-          <div class="platform-role">MI Training · Coming Soon</div>
-          <div class="platform-name">Zeke AI</div>
-          <p class="platform-desc">An AI-powered Motivational Interviewing trainer and peer support buddy — built to sharpen the skills of the peer specialist, not manage their caseload. OARS practice, evoking and eliciting techniques, peer support ethics, and policies & procedures. A quiet coach that helps peers make better decisions and show up stronger in every session.</p>
-          <div class="platform-tags">
-            <span class="tag">OARS Training</span>
-            <span class="tag">MI Skills</span>
-            <span class="tag">Peer Ethics</span>
-            <span class="tag">Support Buddy</span>
-          </div>
-          <div class="platform-tags">
-            <span class="tag">MI Assistant</span>
-            <span class="tag">GPRA/BARC</span>
-            <span class="tag">Note Support</span>
-            <span class="tag">HIPAA Aligned</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="platform-item reveal">
-        <div class="platform-node">03</div>
-        <div class="platform-content">
-          <div class="platform-role">Peer Coordination · Coming Soon</div>
-          <div class="platform-name">L.O.G.</div>
-          <p class="platform-desc">AI-powered peer recovery organization management — SUPRT-C and BARC-10 assessments, recovery plans, participant tracking, and Amazon Nova integration. Built for the Amazon Nova Hackathon 2026.</p>
-          <div class="platform-tags">
-            <span class="tag">SUPRT-C</span>
-            <span class="tag">BARC-10</span>
-            <span class="tag">Amazon Bedrock</span>
-            <span class="tag">42 CFR Part 2</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="platform-item reveal">
-        <div class="platform-node">04</div>
-        <div class="platform-content">
           <div class="platform-role">Field Operations · Live Beta</div>
           <div class="platform-name">Compassionate Log</div>
-          <p class="platform-desc">The most complete tool in the ecosystem — and there is no other field tool quite like it. A nationwide-ready overdose incident tracker and outreach log built for detox centers, drop-in centers, community health workers, and outreach teams. Log Narcan distributions, track health incidents by ZIP code, manage multi-org teams, and generate real-time dashboards. Organizations can use it for full outreach operations or for overdose incident tracking alone. Want to beta test or collaborate? Reach out at <a href="mailto:recoveryhaven@proton.me" style="color:var(--gold); text-decoration:underline; text-underline-offset:3px;">recoveryhaven@proton.me</a>.</p>
+          <p class="platform-desc">The most complete tool in the ecosystem — and there is no other field tool quite like it. A nationwide-ready overdose incident tracker and outreach log built for detox centers, drop-in centers, community health workers, and outreach teams. Log Naloxone distributions, track health incidents by ZIP code, manage multi-org teams, and generate real-time dashboards. Organizations can use it for full outreach operations or for overdose incident tracking alone. Want to beta test or collaborate? Reach out at <a href="mailto:recoveryhaven@proton.me" style="color:var(--gold); text-decoration:underline; text-underline-offset:3px;">recoveryhaven@proton.me</a>.</p>
           <div class="platform-tags">
             <span class="tag">Multi-Org</span>
-            <span class="tag">Narcan Tracking</span>
+            <span class="tag">Naloxone Tracking</span>
             <span class="tag">ZIP Code Analytics</span>
             <span class="tag">Offline-First</span>
             <span class="tag">HIPAA</span>
@@ -981,6 +965,11 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="whats-next reveal">
+      <p class="whats-next-label">What's Next</p>
+      <p>L.O.G. — an AI-assisted layer for peer recovery organizations: structured assessments, recovery plans, and participant tracking. Early development.</p>
     </div>
   </section>
 
@@ -1027,7 +1016,7 @@
               <span class="milestone-reward">Platform Access + Recognition</span>
             </div>
             <div class="token-note">
-              <p>⬡ Soulbound — cannot be sold or transferred<br>⬡ Zero-knowledge proof — verifies without exposing identity<br>⬡ Polygon ID infrastructure · In development</p>
+              <p>⬡ Soulbound — cannot be sold or transferred<br>⬡ Zero-knowledge proof — verifies without exposing identity<br>⬡ Midnight network infrastructure · In development</p>
             </div>
             <div style="margin-top: 1.5rem;">
               <a href="https://github.com/AC1706-67/mano-token/raw/main/MANO_Token_Whitepaper_v3%20(1).pdf" class="btn-primary" target="_blank" style="display:inline-block; width:100%; text-align:center; box-sizing:border-box;">Read the White Paper</a>
@@ -1063,7 +1052,7 @@
       <div class="who-item reveal">
         <div class="who-icon">04 · Field</div>
         <div class="who-title">Outreach & Compassionate Community Care</div>
-        <p class="who-desc">Narcan distribution tracking, overdose incident logging by ZIP code, and team dashboards — a field tool built for outreach workers, community health workers, and everyone doing the work on the ground.</p>
+        <p class="who-desc">Naloxone distribution tracking, overdose incident logging by ZIP code, and team dashboards — a field tool built for outreach workers, community health workers, and everyone doing the work on the ground.</p>
       </div>
       <div class="who-item reveal">
         <div class="who-icon">05 · Future</div>
@@ -1096,7 +1085,7 @@
         </div>
       </div>
       <div class="founder-story reveal">
-        <p>A year and a half ago, <strong>Andrés Chávez was computer illiterate.</strong> He learned to use AI just to help him type. Today he's built four production-grade recovery technology tools — HIPAA-compliant, 42 CFR Part 2-compliant, with multi-organization architecture, tools built specifically with the peer support specialist in mind, and a blockchain credentialing system in development. He's actively looking to collaborate with experienced blockchain architects who share the vision.</p>
+        <p>A year and a half ago, <strong>Andrés Chávez was computer illiterate.</strong> He learned to use AI just to help him type. Today he's built two production-grade recovery technology tools — HIPAA-compliant, 42 CFR Part 2-compliant, with multi-organization architecture, built specifically with the peer support specialist in mind — plus a blockchain credentialing system in active development. He's actively looking to collaborate with experienced blockchain architects who share the vision.</p>
         <div class="pull-quote">"I used to be called a problem.<br>Now I build solutions."</div>
         <p>He works as a Peer Lead at Recovery Alliance El Paso's opioid drop-in center during the day. He codes at night. He co-facilitates MAT and Celebrate Recovery meetings and hosts family support groups using a CRAFT-based curriculum. For nearly a year he showed up every weekend at a local detox facility — because he saw himself in the people he served.</p>
         <p>Anonymous Haven isn't a startup built in a garage by someone who read about the opioid crisis. It's built from inside it. That's the difference.</p>
@@ -1120,7 +1109,7 @@
     <p style="font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; color:var(--muted); text-transform:uppercase;">anonymoushaven.ai · El Paso, TX</p>
   </div>
 
-  <!-- FOOTER — CHANGE 4: Updated copyright year to 2026 -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-brand">© 2026 Anonymous Haven · All Rights Reserved</div>
     <div class="footer-verse">"For I know the plans I have for you..." — Jeremiah 29:11</div>
